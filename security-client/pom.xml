@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cxf-ws-security-client</groupId>
+	<artifactId>security-client</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<dependencies>
+		<!-- cxf动态客户端 -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>3.1.10</version>
+		</dependency>
+		<!-- soap的传输协议是基于http的 -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>3.1.5</version>
+		</dependency>
+		<!-- cxf账户密码验证 -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-ws-security</artifactId>
+			<version>3.1.12</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>stax2-api</artifactId>
+					<groupId>org.codehaus.woodstox</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>woodstox-core-asl</artifactId>
+					<groupId>org.codehaus.woodstox</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.wss4j/wss4j -->
+		<dependency>
+			<groupId>org.apache.wss4j</groupId>
+			<artifactId>wss4j</artifactId>
+			<version>2.1.7</version>
+			<type>pom</type>
+		</dependency>
+
+	</dependencies>
+
+</project>
