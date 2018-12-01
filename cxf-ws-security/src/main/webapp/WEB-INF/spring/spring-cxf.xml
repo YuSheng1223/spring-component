@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+        http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
+        
+	 <!--其中id是自己定义的，implementor是接口实现类，address就是访问的地址 -->
+     <!-- 相当于Endpoint.publish("http://localhost:8080/service", newHelloServiceImp()); --> 
+    <!--发布服务-->
+    <jaxws:endpoint id="helloService" implementor="#HelloServiceImpl" address="/soap/hello">
+    <jaxws:inInterceptors>
+	             <!-- WS-Security拦截器 -->
+	            <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+	                <constructor-arg>
+	                    <map>
+	                        <entry key="action" value="UsernameToken"/>
+	                    <!-- 密码类型，PasswordText表示明文,密文是PasswordDigest -->    
+	                        <entry key="passwordType" value="PasswordText"/>
+	                        <entry key="passwordCallbackRef">
+	                         <!-- 回调函数引用 -->   
+	                            <ref bean="validationCallBack"/>
+	                        </entry>
+	                    </map>
+	                </constructor-arg>
+	            </bean>
+	            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"></bean>
+	        </jaxws:inInterceptors> 
+	        <jaxws:outInterceptors>
+	            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"></bean>
+	        </jaxws:outInterceptors>
+    </jaxws:endpoint>
+	<!-- 开日服务日志 -->
+    <cxf:bus>
+        <cxf:features>
+            <cxf:logging/>
+        </cxf:features>
+    </cxf:bus>
+
+</beans>
